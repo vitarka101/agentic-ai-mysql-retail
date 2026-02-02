@@ -1,0 +1,12 @@
+# n8n
+.n8n/
+*.log
+
+# Environment variables
+.env
+
+# OS junk
+.DS_Store
+
+# Python / misc
+__pycache__/
