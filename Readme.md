@@ -320,10 +320,11 @@ http://localhost:5678/webhook/<your-webhook-id>/chat
 
 ## 🔁 Restarting the System Later
 
-### Start MySQL
+<!-- ### Start MySQL
 ```bash
 mysql.server start
-```
+``` -->
+### Start Docker Desktop
 
 ### Restart n8n
 ```bash
