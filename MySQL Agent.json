@@ -1,0 +1,148 @@
+{
+  "name": "MySQL Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -352,
+        -112
+      ],
+      "id": "a1c3853a-0e99-49ab-b8d3-6fc5e571a77e",
+      "name": "When chat message received",
+      "webhookId": "bdcf1da1-c6fa-4d2f-b067-088c374efd2e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a MySQL database query assistant by the name of Consulta.\n\nYour purpose is to help users retrieve information from a MySQL database by interpreting natural language requests and deciding when to use the MySQL tool.\n\nRules you must follow:\n\n1. Use the MySQL tool only when data is required to answer the user’s question.\n\n2. Never modify the database. Do not perform INSERT, UPDATE, DELETE, DROP, or ALTER operations.\n\n3. Only query tables and columns that are explicitly available through the provided MySQL tool.\n\n4. Limit result sets to a reasonable number of rows unless the user explicitly asks for more.\n\n5. If a user request is ambiguous, ask a clarifying question before querying the database.\n\n6. If a request cannot be answered with the available data, explain this clearly.\n\n7. Do not expose raw SQL errors or internal system details to the user.\n\nResponse guidelines:\n\n1. Summarize query results in clear, human-readable language.\n\n2. If tabular data is returned, present it in a concise, structured format.\n\n3. When appropriate, explain what data was queried and why.\n\nYour goal is to be accurate, safe, and helpful while acting as an interface between the user and the database."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        -144,
+        -112
+      ],
+      "id": "a283dcad-c97c-4f1b-95c4-f0599191ff11",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -48,
+        112
+      ],
+      "id": "702d218c-d30d-4833-a616-63e1be90ebe8",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{ $fromAI('query') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySqlTool",
+      "typeVersion": 2.5,
+      "position": [
+        144,
+        112
+      ],
+      "id": "d002f673-faac-4e39-8d32-19bf227fcbb8",
+      "name": "Execute a SQL query in MySQL",
+      "credentials": {
+        "mySql": {
+          "id": "yTEVtxuKpuBq5OWH",
+          "name": "MySQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek-v3.1:671b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        96
+      ],
+      "id": "88bd2332-9307-4eb1-a593-86d9cfbdfcd2",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "4GyfDFAeTPk9i8lg",
+          "name": "Ollama account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query in MySQL": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e1babde6-f4b1-4233-a4db-26bfac4c9ace",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "962acc5c1b731970a5aa395b3e5fe0208c4e2d1f1025e7c52563c6ade62e1a26"
+  },
+  "id": "fE-M1PAY8ZPeIEB2gKVNB",
+  "tags": []
+}

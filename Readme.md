@@ -299,6 +299,8 @@ The agent follows these rules:
 
 ---
 
+![alt text](</raw_files/prompt.png>)
+
 ## 🔗 AI Provider Configuration
 
 - Ollama: https://ollama.com/api
