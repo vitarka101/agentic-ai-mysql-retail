@@ -1,8 +1,7 @@
 # 🧠 Agentic AI Workflow: MySQL Query Agent (Online Retail)
 
-This project implements an **Agentic AI workflow** in **n8n** (or an ADK-based agent if specified by the course) that enables users to **query a MySQL database using plain English**.
+This project implements an **Agentic AI workflow** in **n8n** that enables users to **query a MySQL database using plain English**.
 
-It is adapted from the **pre-built agent shared in the course syllabus** and reconfigured to work with the **UCI Online Retail dataset** (course-provided link).
 
 ---
 
